@@ -88,12 +88,13 @@ mod app {
 
         let baudrate: u32 = 115_200;
 
-        let uart = hal::uart::UartPeripheral::new(ctx.device.UART0, uart_pins, &mut ctx.device.RESETS)
-            .enable(
-                UartConfig::new(baudrate.Hz(), DataBits::Eight, None, StopBits::One),
-                clocks.peripheral_clock.freq(),
-            )
-            .unwrap();
+        let uart =
+            hal::uart::UartPeripheral::new(ctx.device.UART0, uart_pins, &mut ctx.device.RESETS)
+                .enable(
+                    UartConfig::new(baudrate.Hz(), DataBits::Eight, None, StopBits::One),
+                    clocks.peripheral_clock.freq(),
+                )
+                .unwrap();
 
         hello::spawn().ok();
 
@@ -107,10 +108,7 @@ mod app {
         }
     }
 
-    #[task(
-        local = [uart],
-        priority = 1
-    )]
+    #[task(local = [uart], priority = 1)]
     async fn hello(ctx: hello::Context) {
         loop {
             ctx.local.uart.write_full_blocking(b"Hello RTIC UART!\r\n");
