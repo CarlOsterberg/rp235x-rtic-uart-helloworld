@@ -17,21 +17,12 @@ For a release build
 cargo run --release
 ```
 
-**Loading with picotool**  
-  As ELF files produced by compiling Rust code are completely compatible with ELF
-  files produced by compiling C or C++ code, you can also use the Raspberry Pi
-  tool [picotool](https://github.com/raspberrypi/picotool). The only thing to be
-  aware of is that picotool expects your ELF files to have a `.elf` extension, and
-  by default Rust does not give the ELF files any extension. You can fix this by
-  simply renaming the file.
+## Flashing and running the code
 
-  This means you can't easily use it as a cargo runner - yet.
-
-  Also of note is that the special
-  [pico-sdk](https://github.com/raspberrypi/pico-sdk) macros which hide
-  information in the ELF file in a way that `picotool info` can read it out, are
-  not supported in Rust. An alternative is TBC.
-
+There are two ways, either you can use the picotool or probe-rs. The pciotool
+requires less tools but you need to put the device into mass storage mode somehow.
+probe-rs is easier to use but you need a debugger supporting swd and to solder the debug pins.
+For details see the [cargo config](.cargo/config.toml)
 
 ## License
 
